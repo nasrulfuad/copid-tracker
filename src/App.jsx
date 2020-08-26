@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Typography, Select } from "antd";
+import { Row, Col, Typography, Select, Skeleton } from "antd";
 import TableData from "./components/TableData";
 import Statistic from "./components/Statistic";
-import { WORLDWIDE, getCountries } from "./Api";
+import { WORLDWIDE, getCountries, getCountryInfo } from "./Api";
 import { sortData } from "./utils";
 import "antd/dist/antd.css";
 import "./styles/App.css";
@@ -10,6 +10,7 @@ import "./styles/App.css";
 function App() {
     const [countries, setcountries] = useState([]);
     const [country, setCountry] = useState("worldwide");
+    const [isCountriesLoading, setIsCountriesLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [countryInfo, setCountryInfo] = useState({});
 
@@ -17,6 +18,12 @@ function App() {
         const dataCountryInfo = await (await fetch(url)).json();
         setCountryInfo(dataCountryInfo);
         return dataCountryInfo;
+    };
+
+    const onCountryChange = async countryCode => {
+        const country = await getCountryInfo(countryCode);
+        setCountry(countryCode);
+        setCountryInfo(country);
     };
 
     useEffect(() => {
@@ -30,6 +37,7 @@ function App() {
                 }));
             setcountries(dataCountries);
             setTableData(sortData(data));
+            setIsCountriesLoading(false);
         });
     }, []);
 
@@ -47,7 +55,9 @@ function App() {
                             showSearch
                             placeholder="Select Country"
                             defaultValue={country}
-                            style={{ width: "100%", margin: "0 10px" }}
+                            size="large"
+                            onChange={onCountryChange}
+                            style={{ width: "100%" }}
                             filterOption={(input, option) =>
                                 option.children
                                     .toLowerCase()
@@ -76,7 +86,10 @@ function App() {
                 xs={{ span: 24, offset: 0 }}
                 lg={{ span: 8, offset: 1 }}
             >
-                <TableData countries={tableData} />
+                <TableData
+                    countries={tableData}
+                    isLoading={isCountriesLoading}
+                />
             </Col>
         </Row>
     );
