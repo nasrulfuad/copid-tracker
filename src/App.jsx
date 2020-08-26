@@ -10,20 +10,24 @@ import "./styles/App.css";
 function App() {
     const [countries, setcountries] = useState([]);
     const [country, setCountry] = useState("worldwide");
-    const [isCountriesLoading, setIsCountriesLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [countryInfo, setCountryInfo] = useState({});
+    const [isCountriesLoading, setIsCountriesLoading] = useState(true);
+    const [isCountryInfoLoading, setIsCountryInfoLoading] = useState(true);
 
     const fetchCountryInfo = async url => {
         const dataCountryInfo = await (await fetch(url)).json();
         setCountryInfo(dataCountryInfo);
+        setIsCountryInfoLoading(false);
         return dataCountryInfo;
     };
 
     const onCountryChange = async countryCode => {
+        setIsCountryInfoLoading(true);
         const country = await getCountryInfo(countryCode);
         setCountry(countryCode);
         setCountryInfo(country);
+        setIsCountryInfoLoading(false);
     };
 
     useEffect(() => {
@@ -78,7 +82,10 @@ function App() {
                         </Select>
                     </Col>
                 </Row>
-                <Statistic countryInfo={countryInfo} />
+                <Statistic
+                    countryInfo={countryInfo}
+                    isLoading={isCountryInfoLoading}
+                />
             </Col>
             <Col
                 span={8}
