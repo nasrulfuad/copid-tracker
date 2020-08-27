@@ -3,6 +3,7 @@ import { Row, Col, Typography, Select } from "antd";
 import TableData from "./components/TableData";
 import Statistic from "./components/Statistic";
 import LineGraph from "./components/LineGraph";
+import Map from "./components/Map";
 import { WORLDWIDE, getCountries, getCountryInfo } from "./Api";
 import { sortData } from "./utils";
 import "antd/dist/antd.css";
@@ -14,6 +15,7 @@ function App() {
     const [tableData, setTableData] = useState([]);
     const [countryInfo, setCountryInfo] = useState({});
     const [casesType, setCasesType] = useState("cases");
+    const [mapCountries, setmapCountries] = useState([]);
     const [isCountriesLoading, setIsCountriesLoading] = useState(true);
     const [isCountryInfoLoading, setIsCountryInfoLoading] = useState(true);
 
@@ -44,6 +46,7 @@ function App() {
             setcountries(dataCountries);
             setTableData(sortData(data));
             setIsCountriesLoading(false);
+            setmapCountries(data);
         });
     }, []);
 
@@ -90,6 +93,7 @@ function App() {
                     casesType={casesType}
                     setCasesType={setCasesType}
                 />
+                <Map casesType={casesType} countries={mapCountries} />
             </Col>
             <Col
                 span={8}

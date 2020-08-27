@@ -21,7 +21,7 @@ function Statistic({ countryInfo, isLoading, casesType, ...props }) {
                             type="danger"
                             onClick={e => props.setCasesType("cases")}
                         >
-                            Details
+                            Worldwide Cases Details
                         </Button>
                     </Card>
                 )}
@@ -48,7 +48,7 @@ function Statistic({ countryInfo, isLoading, casesType, ...props }) {
                             type="primary"
                             onClick={e => props.setCasesType("recovered")}
                         >
-                            Details
+                            Worldwide Recovered Details
                         </Button>
                     </Card>
                 )}
@@ -73,7 +73,7 @@ function Statistic({ countryInfo, isLoading, casesType, ...props }) {
                             type="danger"
                             onClick={e => props.setCasesType("deaths")}
                         >
-                            Details
+                            Worldwide Deaths Details
                         </Button>
                     </Card>
                 )}
