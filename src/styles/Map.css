@@ -1,7 +1,42 @@
 .map .ant-card-body {
-    height: 500px;
+    height: 700px;
 }
 
 .map .leaflet-container {
     height: 100%;
+}
+
+.info-container {
+    width: 150px;
+}
+
+.info-flag {
+    height: 80px;
+    width: 100%;
+    background-size: cover;
+    border-radius: 8px;
+}
+
+.info-flag img {
+    width: 100px;
+    border-radius: 5px;
+}
+
+.info-confirmed,
+.info-recovered,
+.info-deaths {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.info-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #555555;
+}
+
+@media (max-width: 990px) {
+    .map .ant-card-body {
+        height: 500px !important;
+    }
 }

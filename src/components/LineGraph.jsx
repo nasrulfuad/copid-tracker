@@ -61,11 +61,12 @@ function LineGraph({ title, lastDays, casesType }) {
     }, [lastDays, casesType]);
 
     return (
-        <Card title={title}>
+        <Card title={title} style={{ height: "350px" }}>
             {isLoading ? (
                 <Skeleton />
             ) : (
                 <Line
+                    height={250}
                     options={options}
                     data={{
                         datasets: [

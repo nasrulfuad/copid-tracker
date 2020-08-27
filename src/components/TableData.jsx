@@ -4,7 +4,7 @@ import "../styles/TableData.css";
 
 function TableData({ countries, isLoading }) {
     return (
-        <Card title="Live by country">
+        <Card title="Live by country" style={{ marginBottom: 20 }}>
             <div className="tableData">
                 {isLoading ? (
                     <List

@@ -12,7 +12,10 @@ function Statistic({ countryInfo, isLoading, casesType, ...props }) {
                     </Card>
                 ) : (
                     <Card>
-                        <Stats title="Cases" value={countryInfo.todayCases} />
+                        <Stats
+                            title="Today Cases"
+                            value={countryInfo.todayCases}
+                        />
                         <h5>Total : {prettyPrintStats(countryInfo.cases)}</h5>
                         <Button
                             block
@@ -34,7 +37,7 @@ function Statistic({ countryInfo, isLoading, casesType, ...props }) {
                 ) : (
                     <Card>
                         <Stats
-                            title="Recovered"
+                            title="Today Recovered"
                             value={countryInfo.todayRecovered}
                             precision={2}
                         />
@@ -61,7 +64,7 @@ function Statistic({ countryInfo, isLoading, casesType, ...props }) {
                 ) : (
                     <Card>
                         <Stats
-                            title="Deaths"
+                            title="Today Deaths"
                             value={countryInfo.todayDeaths}
                             precision={2}
                         />

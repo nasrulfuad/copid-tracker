@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Typography, Select } from "antd";
+import { Row, Col, Typography } from "antd";
+import SelectCountry from "./components/SelectCountry";
 import TableData from "./components/TableData";
 import Statistic from "./components/Statistic";
 import LineGraph from "./components/LineGraph";
@@ -9,15 +10,24 @@ import { sortData } from "./utils";
 import "antd/dist/antd.css";
 import "./styles/App.css";
 
+const WorldwideLatDefault = {
+    lat: 34.80746,
+    lng: -40.4796,
+};
+
+const worldwide = "worldwide";
+
 function App() {
     const [countries, setcountries] = useState([]);
-    const [country, setCountry] = useState("worldwide");
+    const [country, setCountry] = useState(worldwide);
     const [tableData, setTableData] = useState([]);
     const [countryInfo, setCountryInfo] = useState({});
     const [casesType, setCasesType] = useState("cases");
     const [mapCountries, setmapCountries] = useState([]);
+    const [mapCenter, setMapCenter] = useState(WorldwideLatDefault);
     const [isCountriesLoading, setIsCountriesLoading] = useState(true);
     const [isCountryInfoLoading, setIsCountryInfoLoading] = useState(true);
+    const [isMapLoading, setIsMapLoading] = useState(true);
 
     const fetchCountryInfo = async url => {
         const dataCountryInfo = await (await fetch(url)).json();
@@ -28,10 +38,20 @@ function App() {
 
     const onCountryChange = async countryCode => {
         setIsCountryInfoLoading(true);
+        setIsMapLoading(true);
         const country = await getCountryInfo(countryCode);
         setCountry(countryCode);
         setCountryInfo(country);
         setIsCountryInfoLoading(false);
+        setIsMapLoading(false);
+        if (countryCode === worldwide) {
+            setMapCenter(WorldwideLatDefault);
+        } else {
+            setMapCenter({
+                lat: country.countryInfo.lat,
+                lng: country.countryInfo.long,
+            });
+        }
     };
 
     useEffect(() => {
@@ -47,6 +67,7 @@ function App() {
             setTableData(sortData(data));
             setIsCountriesLoading(false);
             setmapCountries(data);
+            setIsMapLoading(false);
         });
     }, []);
 
@@ -60,31 +81,12 @@ function App() {
                         </Typography.Title>
                     </Col>
                     <Col span={5}>
-                        <Select
-                            showSearch
-                            placeholder="Select Country"
-                            defaultValue={country}
-                            size="large"
-                            onChange={onCountryChange}
-                            style={{ width: "100%" }}
-                            filterOption={(input, option) =>
-                                option.children
-                                    .toLowerCase()
-                                    .indexOf(input.toLowerCase()) >= 0
-                            }
-                        >
-                            <Select.Option value="worldwide">
-                                Worldwide
-                            </Select.Option>
-                            {countries.map(country => (
-                                <Select.Option
-                                    key={country.value}
-                                    value={country.value}
-                                >
-                                    {country.name}
-                                </Select.Option>
-                            ))}
-                        </Select>
+                        <SelectCountry
+                            countries={countries}
+                            country={country}
+                            onCountryChange={onCountryChange}
+                            isLoading={isCountriesLoading}
+                        />
                     </Col>
                 </Row>
                 <Statistic
@@ -93,7 +95,12 @@ function App() {
                     casesType={casesType}
                     setCasesType={setCasesType}
                 />
-                <Map casesType={casesType} countries={mapCountries} />
+                <Map
+                    casesType={casesType}
+                    countries={mapCountries}
+                    mapCenter={mapCenter}
+                    isLoading={isMapLoading}
+                />
             </Col>
             <Col
                 span={8}
@@ -106,7 +113,7 @@ function App() {
                     isLoading={isCountriesLoading}
                 />
                 <LineGraph
-                    title="World new cases"
+                    title={`Worldwide new ${casesType}`}
                     lastDays={120}
                     casesType={casesType}
                 />
