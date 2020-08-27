@@ -1,5 +1,5 @@
 import React from "react";
-import { Select, Skeleton, Card } from "antd";
+import { Select, Skeleton } from "antd";
 
 function SelectCountry({ countries, country, isLoading, ...props }) {
     if (isLoading) {

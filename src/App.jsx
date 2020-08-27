@@ -11,8 +11,8 @@ import "antd/dist/antd.css";
 import "./styles/App.css";
 
 const WorldwideLatDefault = {
-    lat: 34.80746,
-    lng: -40.4796,
+    lat: 47,
+    lng: 29,
 };
 
 const worldwide = "worldwide";
@@ -74,13 +74,16 @@ function App() {
     return (
         <Row className="app">
             <Col span={15} xs={{ span: 24 }} lg={{ span: 15 }}>
-                <Row>
-                    <Col span={19}>
-                        <Typography.Title type="secondary">
-                            Covid 19 Tracker
+                <Row style={{ padding: "5px 0" }}>
+                    <Col lg={{ span: 19 }} xs={{ span: 24 }}>
+                        <Typography.Title
+                            type="secondary"
+                            style={{ textAlign: "center" }}
+                        >
+                            Nasrul Copid Tracker
                         </Typography.Title>
                     </Col>
-                    <Col span={5}>
+                    <Col lg={{ span: 5 }} xs={{ span: 24 }}>
                         <SelectCountry
                             countries={countries}
                             country={country}

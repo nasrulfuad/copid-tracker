@@ -7,7 +7,7 @@ import "../styles/Map.css";
 
 function Map({ countries, casesType, mapCenter, isLoading = true }) {
     return (
-        <Card className="map">
+        <Card className="map" style={{ marginBottom: 20 }}>
             {isLoading ? (
                 <List
                     dataSource={[1, 2, 3, 4, 5]}

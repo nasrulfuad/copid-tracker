@@ -54,10 +54,11 @@ function LineGraph({ title, lastDays, casesType }) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        getHistoricalData(lastDays).then(data => {
-            setData(buildChartData(data, casesType));
-            setIsLoading(false);
-        });
+        getHistoricalData(lastDays)
+            .then(data => {
+                setData(buildChartData(data, casesType));
+            })
+            .then(() => setIsLoading(false));
     }, [lastDays, casesType]);
 
     return (
