@@ -2,7 +2,7 @@ import React from "react";
 import { Statistic as Stats, Row, Col, Button, Card, Skeleton } from "antd";
 import { prettyPrintStats } from "../utils";
 
-function Statistic({ countryInfo, isLoading }) {
+function Statistic({ countryInfo, isLoading, casesType, ...props }) {
     return (
         <Row gutter={[16, 16]}>
             <Col span={8}>
@@ -14,7 +14,13 @@ function Statistic({ countryInfo, isLoading }) {
                     <Card>
                         <Stats title="Cases" value={countryInfo.todayCases} />
                         <h5>Total : {prettyPrintStats(countryInfo.cases)}</h5>
-                        <Button style={{ marginTop: 16 }} type="danger">
+                        <Button
+                            block
+                            disabled={casesType === "cases"}
+                            style={{ marginTop: 16 }}
+                            type="danger"
+                            onClick={e => props.setCasesType("cases")}
+                        >
                             Details
                         </Button>
                     </Card>
@@ -35,7 +41,13 @@ function Statistic({ countryInfo, isLoading }) {
                         <h5>
                             Total : {prettyPrintStats(countryInfo.recovered)}
                         </h5>
-                        <Button style={{ marginTop: 16 }} type="primary">
+                        <Button
+                            block
+                            disabled={casesType === "recovered"}
+                            style={{ marginTop: 16 }}
+                            type="primary"
+                            onClick={e => props.setCasesType("recovered")}
+                        >
                             Details
                         </Button>
                     </Card>
@@ -54,7 +66,13 @@ function Statistic({ countryInfo, isLoading }) {
                             precision={2}
                         />
                         <h5>Total : {prettyPrintStats(countryInfo.deaths)}</h5>
-                        <Button style={{ marginTop: 16 }} type="danger">
+                        <Button
+                            block
+                            disabled={casesType === "deaths"}
+                            style={{ marginTop: 16 }}
+                            type="danger"
+                            onClick={e => props.setCasesType("deaths")}
+                        >
                             Details
                         </Button>
                     </Card>

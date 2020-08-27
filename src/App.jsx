@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Typography, Select, Skeleton } from "antd";
+import { Row, Col, Typography, Select } from "antd";
 import TableData from "./components/TableData";
 import Statistic from "./components/Statistic";
+import LineGraph from "./components/LineGraph";
 import { WORLDWIDE, getCountries, getCountryInfo } from "./Api";
 import { sortData } from "./utils";
 import "antd/dist/antd.css";
@@ -12,6 +13,7 @@ function App() {
     const [country, setCountry] = useState("worldwide");
     const [tableData, setTableData] = useState([]);
     const [countryInfo, setCountryInfo] = useState({});
+    const [casesType, setCasesType] = useState("cases");
     const [isCountriesLoading, setIsCountriesLoading] = useState(true);
     const [isCountryInfoLoading, setIsCountryInfoLoading] = useState(true);
 
@@ -85,6 +87,8 @@ function App() {
                 <Statistic
                     countryInfo={countryInfo}
                     isLoading={isCountryInfoLoading}
+                    casesType={casesType}
+                    setCasesType={setCasesType}
                 />
             </Col>
             <Col
@@ -96,6 +100,11 @@ function App() {
                 <TableData
                     countries={tableData}
                     isLoading={isCountriesLoading}
+                />
+                <LineGraph
+                    title="World new cases"
+                    lastDays={120}
+                    casesType={casesType}
                 />
             </Col>
         </Row>

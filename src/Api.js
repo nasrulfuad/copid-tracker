@@ -14,3 +14,9 @@ export const getCountryInfo = async countryCode => {
         await fetch(BASE_URL + `countries/${countryCode}`)
     ).json();
 };
+
+export const getHistoricalData = async lastDays => {
+    return await (
+        await fetch(BASE_URL + `historical/all?lastdays=${lastDays}`)
+    ).json();
+};
